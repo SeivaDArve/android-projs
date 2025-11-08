@@ -1,0 +1,85 @@
+aqui tens um guia prático e direto para pegares no código do widget que te dei e empacotar tudo num .apk funcional no Android Studio:
+
+🧭 1. Cria (ou abre) um projeto Android
+
+Abre o Android Studio
+
+Clica em "New Project" → Empty Activity
+
+Nomeia o projeto por exemplo Cubo
+
+Linguagem: Kotlin
+
+Minimum SDK: Android 8.0 (API 26)
+
+Conclui.
+
+🧩 2. Adiciona os ficheiros do widget
+
+Extrai o ficheiro Cubo_widget.zip
+
+Copia o conteúdo das pastas para o teu projeto:
+
+app/src/main/
+ ├── java/com/cubo/widget/FileWidgetProvider.kt
+ ├── res/layout/widget_layout.xml
+ ├── res/xml/file_widget_info.xml
+ └── AndroidManifest.xml
+
+
+Se o teu projeto já tiver um AndroidManifest.xml, abre-o e copia apenas o <receiver> de dentro do nosso manifest para o <application> do teu projeto.
+
+Exemplo final dentro de <application>:
+
+<receiver android:name=".widget.FileWidgetProvider" >
+    <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+    </intent-filter>
+    <meta-data
+        android:name="android.appwidget.provider"
+        android:resource="@xml/file_widget_info" />
+</receiver>
+
+⚙️ 3. Verifica permissões (para ler o ficheiro)
+
+O ficheiro monitorizado está em:
+
+/data/data/com.termux/files/home/ficheiro-monitorizado.txt
+
+
+Se a tua app e o Termux usam o mesmo utilizador (UID) (isto só acontece se for app de sistema ou ambas tiverem root), funciona direto.
+Caso contrário, o Android não deixará ler essa pasta privada.
+
+👉 Alternativa: copia o ficheiro para /sdcard/ e muda o caminho no código para testares sem root.
+
+🧱 4. Compila e gera o APK
+
+No Android Studio, vai a Build → Build Bundle(s) / APK(s) → Build APK(s)
+
+Espera compilar e clica em “locate”
+
+O ficheiro .apk estará em:
+
+app/build/outputs/apk/debug/app-debug.apk
+
+📲 5. Instala e adiciona o widget
+
+Transfere o .apk para o telemóvel e instala-o
+
+Mantém o dedo pressionado no ecrã inicial → Widgets
+
+Procura o widget chamado Cubo (ou o nome que deste ao projeto)
+
+Arrasta o widget 1x1 para o ecrã
+
+Ele mostrará verde se o ficheiro foi alterado há <5 minutos, vermelho se >5 minutos
+
+Ao tocar → abre o Termux.
+
+💡 Dica extra
+
+Se quiseres que o widget atualize mais rápido que 1 minuto, podes:
+
+Usar um WorkManager ou AlarmManager no futuro
+
+Ou reduzir android:updatePeriodMillis no file_widget_info.xml (mínimo eficaz ≈ 30s).

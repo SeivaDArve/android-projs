@@ -1,0 +1,77 @@
+Queres que eu te acrescente um build.gradle mínimo para poderes abrir o projeto imediatamente no Android Studio sem teres de o criar manualmente?
+
+Aqui vai um resumo direto e técnico de como empacotar o código do widget num APK funcional:
+
+🧭 1. Cria o projeto
+
+Abre o Android Studio → New Project → Empty Activity
+
+Nome: Cubo
+
+Linguagem: Kotlin
+
+Minimum SDK: Android 8.0 (API 26)
+
+Conclui.
+
+📂 2. Copia os ficheiros do widget
+
+Extrai Cubo_widget.zip e copia o conteúdo para:
+
+app/src/main/
+ ├── java/com/cubo/widget/FileWidgetProvider.kt
+ ├── res/layout/widget_layout.xml
+ ├── res/xml/file_widget_info.xml
+ └── AndroidManifest.xml
+
+
+Se o teu projeto já tiver AndroidManifest.xml, copia apenas esta parte para dentro do <application> existente:
+
+<receiver android:name=".widget.FileWidgetProvider" >
+    <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+    </intent-filter>
+    <meta-data
+        android:name="android.appwidget.provider"
+        android:resource="@xml/file_widget_info" />
+</receiver>
+
+⚙️ 3. Ajusta o caminho do ficheiro
+
+O código verifica:
+
+/data/data/com.termux/files/home/ficheiro-monitorizado.txt
+
+
+⚠️ Esse caminho só é acessível se tiveres permissões root ou UID partilhado com o Termux.
+Para testar facilmente, muda temporariamente para um ficheiro em /sdcard/.
+
+🧱 4. Compila o APK
+
+No Android Studio:
+
+Menu Build → Build Bundle(s)/APK(s) → Build APK(s)
+
+Depois de compilar, abre o local do ficheiro:
+
+app/build/outputs/apk/debug/app-debug.apk
+
+📲 5. Instala e adiciona o widget
+
+Copia o .apk para o telemóvel e instala.
+
+Mantém o dedo pressionado no ecrã inicial → Widgets.
+
+Procura Cubo e adiciona-o (1x1).
+
+O widget:
+
+Mostra verde se o ficheiro foi modificado há <5 minutos.
+
+Mostra vermelho se há >5 minutos.
+
+Ao clicar → abre o Termux.
+
+💡 Dica opcional
+
+Se quiseres um tempo de atualização menor que 1 minuto, podes substituir updatePeriodMillis="60000" por 30000 (30 s), embora o Android limite valores demasiado baixos.

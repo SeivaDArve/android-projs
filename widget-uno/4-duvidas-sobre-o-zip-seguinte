@@ -1,0 +1,54 @@
+se eu gerar esse .zip completo com a estrutura de projeto Android correta (incluindo os build.gradle, settings.gradle, manifest, layouts e código Kotlin do widget), então:
+
+⚙️ O que vais poder fazer:
+
+Abrir diretamente no Android Studio
+
+Basta fazer: File → Open → selecionar a pasta extraída do .zip (Cubo/)
+
+O Android Studio vai detetar automaticamente o projeto Gradle e sincronizar tudo.
+
+Compilar o .apk sem tocar em código
+
+Quando a sincronização terminar, só clicas em:
+Build → Build Bundle(s) / APK(s) → Build APK(s)
+
+Ele gera o APK em:
+
+app/build/outputs/apk/debug/app-debug.apk
+
+
+Instalar no telemóvel
+
+Copia esse .apk para o dispositivo e instala normalmente.
+
+Depois adicionas o widget “Cubo” no ecrã inicial.
+
+📦 Resumindo
+
+Extrai o .zip.
+
+Abre a pasta Cubo no Android Studio (File → Open).
+
+Espera o Gradle sincronizar.
+
+Vai em Build → Build Bundle(s) / APK(s) → Build APK(s).
+
+O .apk estará em:
+
+app/build/outputs/apk/debug/app-debug.apk
+
+
+Instala no teu dispositivo e adiciona o widget 1x1 “Cubo”.
+
+
+
+
+
+
+
+
+
+
+
+
